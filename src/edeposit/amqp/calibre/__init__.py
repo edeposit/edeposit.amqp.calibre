@@ -12,8 +12,9 @@ import sh
 #= Variables ==================================================================
 
 
-
 #= Functions & objects ========================================================
+# see for details
+# http://manual.calibre-ebook.com/faq.html#what-formats-does-app-support-conversion-to-from
 INPUT_FORMATS = [
     "cbz",
     "cbr",
