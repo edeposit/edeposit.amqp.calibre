@@ -63,22 +63,33 @@ OUTPUT_FORMATS = [
 ]
 
 
-class ConversionRequest(namedtuple("ConversionRequest", ["input_type",
-                                                         "output_type",
+class ConversionRequest(namedtuple("ConversionRequest", ["input_format",
+                                                         "output_format",
                                                          "data"])):
-    def __init__(self, input_type, output_type, data):
-        if input_type not in INPUT_FORMATS:
-            raise ValueError("Unsupported input type!")
+    """
+    Args:
+        input_format (str): see INPUT_FORMATS for list of valid formats
+        output_format (str): see OUTPUT_FORMATS for list of valid formats
+        data (base64 str): base64 encoded file
+    """
+    def __init__(self, input_format, output_format, data):
+        if input_format not in INPUT_FORMATS:
+            raise ValueError("Unsupported input format!")
 
-        if output_type not in OUTPUT_FORMATS:
-            raise ValueError("Unsupported output type!")
+        if output_format not in OUTPUT_FORMATS:
+            raise ValueError("Unsupported output format!")
 
-        if input_type == output_type:
-            raise ValueError("Input and output types are the same.")
+        if input_format == output_format:
+            raise ValueError("Input and output formats are the same.")
 
 
 class ConversionResponse(namedtuple("ConversionResponse", ["type",
                                                            "data"])):
+    """
+    Args:
+        type (str): see OUTPUT_FORMATS for details
+        data (base64 str): base64 encoded converted data
+    """
     pass
 
 
