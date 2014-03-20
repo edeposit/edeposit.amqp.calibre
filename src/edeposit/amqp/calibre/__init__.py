@@ -62,14 +62,29 @@ OUTPUT_FORMATS = [
 ]
 
 
-class ConversionRequest(namedtuple("ConversionRequest", [])):
+class ConversionRequest(namedtuple("ConversionRequest", ["input_type",
+                                                         "output_type",
+                                                         "data"])):
+    def __init__(self, input_type, output_type, data):
+        if input_type not in INPUT_FORMATS:
+            raise ValueError("Unsupported input type!")
+
+        if output_type not in OUTPUT_FORMATS:
+            raise ValueError("Unsupported output type!")
+
+        if input_type == output_type:
+            raise ValueError("Input and output types are the same.")
+
+
+class ConversionResponse(namedtuple("ConversionResponse", ["type",
+                                                           "data"])):
     pass
-
-
-class ConversionResponse(namedtuple("ConversionResponse", [])):
-    pass
-
 
 
 def reactToAMQPMessage(message, response_callback, UUID):
     pass
+
+
+# TESTs
+c = ConversionRequest("epub", "pdf", "xexexe")
+print c
