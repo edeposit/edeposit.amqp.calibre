@@ -65,14 +65,14 @@ OUTPUT_FORMATS = [
 
 class ConversionRequest(namedtuple("ConversionRequest", ["input_format",
                                                          "output_format",
-                                                         "data"])):
+                                                         "b64_data"])):
     """
     Args:
         input_format (str): see INPUT_FORMATS for list of valid formats
         output_format (str): see OUTPUT_FORMATS for list of valid formats
-        data (base64 str): base64 encoded file
+        b64_data (base64 str): base64 encoded file
     """
-    def __init__(self, input_format, output_format, data):
+    def __init__(self, input_format, output_format, b64_data):
         if input_format not in INPUT_FORMATS:
             raise ValueError("Unsupported input format!")
 
@@ -84,11 +84,11 @@ class ConversionRequest(namedtuple("ConversionRequest", ["input_format",
 
 
 class ConversionResponse(namedtuple("ConversionResponse", ["type",
-                                                           "data"])):
+                                                           "b64_data"])):
     """
     Args:
         type (str): see OUTPUT_FORMATS for details
-        data (base64 str): base64 encoded converted data
+        b64_data (base64 str): base64 encoded converted data
     """
     pass
 
