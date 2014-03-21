@@ -55,13 +55,13 @@ You can run them manually (from the root of the package):
 
 ::
 
-    $ pybot -W 100 --pythonpath src/edeposit/amqp/calibre/tests/:src src/edeposit/amqp/calibre/tests/
+    $ pybot -W 80 --pythonpath src/edeposit/amqp/calibre/tests/:src src/edeposit/amqp/calibre/tests/
 
 Or continuously using nosier:
 
 ::
 
-    $ nosier -p src -b 'export' "pybot -W 100 --pythonpath src/edeposit/amqp/calibre/tests/ --pythonpath src src/edeposit/amqp/calibre/tests/"
+    $ nosier -p src -b 'export' "pybot -W 80 --pythonpath src/edeposit/amqp/calibre/tests/ --pythonpath src src/edeposit/amqp/calibre/tests/"
 
 Status of acceptance tests
 ++++++++++++++++++++++++++
