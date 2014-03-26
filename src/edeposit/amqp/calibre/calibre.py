@@ -51,7 +51,7 @@ def convert(input_format, output_format, b64_data):
 
     Returns:
         ConversionResponse: namedtuple structure with information about output
-        `                   `format``, data (``b64_data``) and protocol from
+                            ``format``, data (``b64_data``) and protocol from
                             conversion (``protocol``). Structured is defined
                             in :class:`__init__.ConversionResponse`.
 
@@ -67,13 +67,12 @@ def convert(input_format, output_format, b64_data):
     with NTFile(mode="wb", suffix="." + input_format, dir="/tmp") as ifile:
         ofilename = ifile.name + "." + output_format
 
-        print ifile.name
-
         # save received data to the temporary file
         ifile.write(
             b64decode(b64_data)
         )
 
+        # convert file
         output = sh.ebook_convert(ifile.name, ofilename)
 
         if "EPUB output written to" not in output:
