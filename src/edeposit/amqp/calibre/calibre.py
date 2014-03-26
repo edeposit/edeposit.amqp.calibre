@@ -4,6 +4,7 @@
 # Interpreter version: python 2.7
 #
 #= Imports ====================================================================
+import os
 from base64 import b64encode, b64decode
 from tempfile import NamedTemporaryFile as NTFile
 
@@ -11,11 +12,7 @@ from tempfile import NamedTemporaryFile as NTFile
 import sh
 
 
-from __init__ import INPUT_FORMATS, OUTPUT_FORMATS
-
-
-#= Variables ==================================================================
-
+from __init__ import INPUT_FORMATS, OUTPUT_FORMATS, ConversionResponse
 
 
 #= Functions & objects ========================================================
@@ -67,11 +64,19 @@ def convert(input_format, output_format, b64_data):
         if "EPUB output written to" not in output:
             raise UserWarning("Conversion failed:\n" + output)
 
+        # read the data from the converted file
         output_data = None
         with open(ofilename, "rb") as ofile:
             output_data = ofile.read()
 
-        # unlink ofilename
+        # remove temporary
+        os.remove(ofilename),
+
+        return ConversionResponse(
+            format=output_format,
+            b64_data=b64encode(output_data),
+            protocol=str(output)
+        )
 
 
 
