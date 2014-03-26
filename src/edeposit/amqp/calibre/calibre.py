@@ -43,17 +43,17 @@ def convert(input_format, output_format, b64_data):
     Convert `b64_data` fron `input_format` to `output_format`.
 
     Args:
-        input_format (str): specification of input format (pdf/epub/whatever),
-                            see :attr:`__init__.INPUT_FORMATS` for list
+        input_format (str):  specification of input format (pdf/epub/whatever),
+                             see :attr:`__init__.INPUT_FORMATS` for list
         output_format (str): specification of output format (pdf/epub/whatever),
                              see :attr:`__init__.OUTPUT_FORMATS` for list
-        b64_data (str): base64 encoded data
+        b64_data (str):      base64 encoded data
 
     Returns:
         ConversionResponse: namedtuple structure with information about output
-        ``format``, data (``b64_data``) and protocol from conversion
-        (``protocol``). Structured is defined here:
-        :class:`__init__.ConversionResponse`.
+        `                   `format``, data (``b64_data``) and protocol from
+                            conversion (``protocol``). Structured is defined
+                            in :class:`__init__.ConversionResponse`.
 
     Raises:
         AssertionError: when bad arguments are handed over
