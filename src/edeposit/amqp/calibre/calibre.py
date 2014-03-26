@@ -4,7 +4,14 @@
 # Interpreter version: python 2.7
 #
 #= Imports ====================================================================
+from base64 import b64encode, b64decode
+from tempfile import NamedTemporaryFile as NTFile
+
+
 import sh
+
+
+from __init__ import INPUT_FORMATS, OUTPUT_FORMATS
 
 
 #= Variables ==================================================================
@@ -12,7 +19,7 @@ import sh
 
 
 #= Functions & objects ========================================================
-def check():
+def check_ebook_convert():
     """
     Check, if the 'ebook-convert' program is installed.
 
@@ -20,23 +27,57 @@ def check():
         UserWarning: if not.
     """
     try:
-        output = sh.ebook_convert("ebook-convert", _ok_code=[1])
+        output = sh.ebook_convert(_ok_code=[1])
     except sh.CommandNotFound:
         raise UserWarning(
             "'ebook-convert' not found. Do you have callibre installed?"
         )
 
-    if "Usage:" not in output:
+    # check whether the output is really from ebook-convert
+    if "Usage" not in output or "Convert an ebook" not in output:
         raise UserWarning(
-            "'ebook-convert' reacts strangely. Post this to developers:\n" +
-            output
+            "'ebook-convert' reacts strangely. Post this to developers:\n\n" +
+            b64encode(str(output))
         )
 
 
-def convert(input_type, output_type, b64_data):
-    pass
+def convert(input_format, output_format, b64_data):
+    """
+    Raises:
+        AssertionError: when bad arguments are handed over
+        UserWarning: when conversion failed
+    """
+    # checks
+    assert input_format in INPUT_FORMATS, "Unsupported input format!"
+    assert output_format in OUTPUT_FORMATS, "Unsupported output format!"
+    assert input_format != output_format, "Input and output formats are same!"
+
+    with NTFile(mode="wb", suffix="." + input_format, dir="/tmp") as ifile:
+        ofilename = ifile.name + "." + output_format
+
+        print ifile.name
+
+        # save received data to the temporary file
+        ifile.write(
+            b64decode(b64_data)
+        )
+
+        output = sh.ebook_convert(ifile.name, ofilename)
+
+        if "EPUB output written to" not in output:
+            raise UserWarning("Conversion failed:\n" + output)
+
+        output_data = None
+        with open(ofilename, "rb") as ofile:
+            output_data = ofile.read()
+
+        # unlink ofilename
+
+
 
 
 #= Main program ===============================================================
 if __name__ == '__main__':
-    check()
+    check_ebook_convert()
+    data = b64encode(open("Programovaci_FAQ.html").read())
+    print convert("html", "epub", data)
