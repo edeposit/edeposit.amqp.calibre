@@ -7,6 +7,9 @@
 from collections import namedtuple
 
 
+import calibre
+
+
 #= Variables ==================================================================
 # see for details
 # http://manual.calibre-ebook.com/faq.html#what-formats-does-app-support-conversion-to-from
@@ -91,5 +94,44 @@ class ConversionResponse(namedtuple("ConversionResponse", ["format",
     pass
 
 
+def _instanceof(instance, class_):
+    """Check type by matching .__name__."""
+    type(instance).__name__ == class_.__name__
+
+
 def reactToAMQPMessage(message, response_callback, UUID):
-    pass
+    """
+    React to given (AMQP) message. Return data thru given callback function.
+
+    Args:
+        message (*Request class): ConversionRequest
+        response_callback (func): function has to take two parameters -
+                                  message's body and UUID, used to send data
+                                  back
+        UUID (str): unique ID of received message
+
+    Note:
+        Function take care of sending the response over AMQP, or whatever you
+        use by calling `response_callback()`.
+
+    Returns:
+        result of `response_callback()` call.
+
+    Raises:
+        ValueError: if bad type of `message` structure is given.
+    """
+    response = None
+
+    if _instanceof(message, ConversionRequest):
+        response = calibre.convert(
+            message.input_format,
+            message.output_format,
+            message.b64_data
+        )
+
+    if not response:
+        raise ValueError(
+            "Unknown type of request: '" + str(type(message)) + "'!"
+        )
+
+    return response_callback(response, UUID)
