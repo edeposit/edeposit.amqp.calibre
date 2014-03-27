@@ -6,13 +6,8 @@
 #= Imports ====================================================================
 from collections import namedtuple
 
-import sh
-
 
 #= Variables ==================================================================
-
-
-#= Functions & objects ========================================================
 # see for details
 # http://manual.calibre-ebook.com/faq.html#what-formats-does-app-support-conversion-to-from
 INPUT_FORMATS = [
@@ -63,6 +58,7 @@ OUTPUT_FORMATS = [
 ]
 
 
+#= Functions & objects ========================================================
 class ConversionRequest(namedtuple("ConversionRequest", ["input_format",
                                                          "output_format",
                                                          "b64_data"])):
@@ -83,20 +79,17 @@ class ConversionRequest(namedtuple("ConversionRequest", ["input_format",
             raise ValueError("Input and output formats are the same.")
 
 
-class ConversionResponse(namedtuple("ConversionResponse", ["type",
-                                                           "b64_data"])):
+class ConversionResponse(namedtuple("ConversionResponse", ["format",
+                                                           "b64_data",
+                                                           "protocol"])):
     """
     Args:
         type (str): see OUTPUT_FORMATS for details
         b64_data (base64 str): base64 encoded converted data
+        protocol (str): protocol of the conversion
     """
     pass
 
 
 def reactToAMQPMessage(message, response_callback, UUID):
     pass
-
-
-# TESTs
-c = ConversionRequest("epub", "pdf", "xexexe")
-print c

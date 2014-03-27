@@ -75,7 +75,7 @@ def convert(input_format, output_format, b64_data):
         # convert file
         output = sh.ebook_convert(ifile.name, ofilename)
 
-        if "EPUB output written to" not in output:
+        if output_format.upper() + " output written to" not in output:
             raise UserWarning("Conversion failed:\n" + output)
 
         # read the data from the converted file
@@ -91,10 +91,3 @@ def convert(input_format, output_format, b64_data):
             b64_data=b64encode(output_data),
             protocol=str(output)
         )
-
-
-#= Main program ===============================================================
-if __name__ == '__main__':
-    check_ebook_convert()
-    data = b64encode(open("Programovaci_FAQ.html").read())
-    print convert("html", "epub", data)
