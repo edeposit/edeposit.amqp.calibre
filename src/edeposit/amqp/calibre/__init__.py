@@ -13,7 +13,7 @@ import calibre
 #= Variables ==================================================================
 # see for details
 # http://manual.calibre-ebook.com/faq.html#what-formats-does-app-support-conversion-to-from
-INPUT_FORMATS = [
+INPUT_FORMATS = [  #:
     "cbz",
     "cbr",
     "cbc",
@@ -40,7 +40,7 @@ INPUT_FORMATS = [
     "txtz"
 ]
 
-OUTPUT_FORMATS = [
+OUTPUT_FORMATS = [  #:
     "azw3",
     "epub",
     "fb2",
@@ -67,8 +67,9 @@ class ConversionRequest(namedtuple("ConversionRequest", ["input_format",
                                                          "b64_data"])):
     """
     Args:
-        input_format (str): see INPUT_FORMATS for list of valid formats
-        output_format (str): see OUTPUT_FORMATS for list of valid formats
+        input_format (str):  see :attr:`INPUT_FORMATS` for list of valid formats
+        output_format (str): see :attr:`OUTPUT_FORMATS` for list of valid
+                             formats
         b64_data (base64 str): base64 encoded file
     """
     def __init__(self, input_format, output_format, b64_data):
@@ -99,39 +100,29 @@ def _instanceof(instance, class_):
     type(instance).__name__ == class_.__name__
 
 
-def reactToAMQPMessage(message, response_callback, UUID):
+def reactToAMQPMessage(message, UUID):
     """
     React to given (AMQP) message. Return data thru given callback function.
 
     Args:
-        message (*Request class): ConversionRequest
-        response_callback (func): function has to take two parameters -
-                                  message's body and UUID, used to send data
-                                  back
+        message (*Request class): only :class`ConversionRequest` class is
+                                  supported right now
         UUID (str): unique ID of received message
 
-    Note:
-        Function take care of sending the response over AMQP, or whatever you
-        use by calling `response_callback()`.
-
     Returns:
-        result of `response_callback()` call.
+        ConversionResponse: response to :class:`ConversionRequest` filled with
+                            data.
 
     Raises:
         ValueError: if bad type of `message` structure is given.
     """
-    response = None
-
     if _instanceof(message, ConversionRequest):
-        response = calibre.convert(
+        return calibre.convert(
             message.input_format,
             message.output_format,
             message.b64_data
         )
 
-    if not response:
-        raise ValueError(
-            "Unknown type of request: '" + str(type(message)) + "'!"
-        )
-
-    return response_callback(response, UUID)
+    raise ValueError(
+        "Unknown type of request: '" + str(type(message)) + "'!"
+    )
