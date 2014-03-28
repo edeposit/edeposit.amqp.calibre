@@ -102,7 +102,7 @@ def _instanceof(instance, class_):
 
 def reactToAMQPMessage(message, UUID):
     """
-    React to given (AMQP) message. Return data thru given callback function.
+    React to given (AMQP) message.
 
     Args:
         message (*Request class): only :class`ConversionRequest` class is
