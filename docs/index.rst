@@ -1,7 +1,7 @@
 edeposit.amqp.calibre documentation
 ===================================
-This module provides wrapper for Calibre_, to access conversion functions using
-AMQP protocol.
+This module provides wrapper for Calibre_, to access it's conversion functions
+using AMQP protocol.
 
 Module provides only generic wrapper, not AMQP communication itself - that is
 handled by Calibredaemon_ from `edeposit.amqp`_ project.
@@ -21,7 +21,6 @@ Module is hosted at GitHub:
 and can be installed using PIP::
 
     pip install edeposit.amqp.calibre
-
 
 API
 ---

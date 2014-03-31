@@ -18,7 +18,6 @@ extensions = [
 ]
 
 intersphinx_mapping = {
-    "ser": ('http://edepositamqpserializers.readthedocs.org/en/latest/', None),
     'python': ('http://docs.python.org/2.7', None)
 }
 
@@ -48,7 +47,8 @@ project = u'edeposit.amqp.calibre'
 copyright = u'2014 E-deposit team'
 
 # The full version, including alpha/beta/rc tags.
-release = '1.0.0'
+from __init__ import getVersion
+release = getVersion(open("../CHANGES.rst").read())
 
 # The short X.Y version.
 version = ".".join(release.split(".")[:2])
