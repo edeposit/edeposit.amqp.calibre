@@ -6,6 +6,8 @@ AMQP protocol.
 Module provides only generic wrapper, not AMQP communication itself - that is
 handled by Calibredaemon_ from `edeposit.amqp`_ project.
 
+.. image:: _static/uml.png
+
 .. _Calibre: http://calibre-ebook.com
 .. _Calibredaemon: https://github.com/edeposit/edeposit.amqp/blob/master/edeposit/amqp/calibreademon.py
 .. _edeposit.amqp: http://edeposit-amqp.readthedocs.org
