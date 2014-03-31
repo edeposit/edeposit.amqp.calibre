@@ -4,6 +4,9 @@
 # Interpreter version: python 2.7
 #
 #= Imports ====================================================================
+"""
+AMQP communication wrapper for calibre's ``ebook-convert`` program.
+"""
 from collections import namedtuple
 
 
@@ -11,9 +14,7 @@ import calibre
 
 
 #= Variables ==================================================================
-# see for details
-# http://manual.calibre-ebook.com/faq.html#what-formats-does-app-support-conversion-to-from
-INPUT_FORMATS = [  #:
+INPUT_FORMATS = [
     "cbz",
     "cbr",
     "cbc",
@@ -39,6 +40,7 @@ INPUT_FORMATS = [  #:
     "txt",
     "txtz"
 ]
+"List of `available input <http://bit.ly/1c1bHZP>`_ formats."
 
 OUTPUT_FORMATS = [  #:
     "azw3",
@@ -59,6 +61,7 @@ OUTPUT_FORMATS = [  #:
     "txt",
     "txtz"
 ]
+"List of `available output <http://bit.ly/1c1bHZP>`_ formats."
 
 
 #= Functions & objects ========================================================
@@ -66,11 +69,18 @@ class ConversionRequest(namedtuple("ConversionRequest", ["input_format",
                                                          "output_format",
                                                          "b64_data"])):
     """
+    This structure specifies details of AMQP message, which is passed to
+    :func:`reactToAMQPMessage` as request for conversion.
+
     Args:
-        input_format (str):  see :attr:`INPUT_FORMATS` for list of valid formats
-        output_format (str): see :attr:`OUTPUT_FORMATS` for list of valid
+        input_format (str):  see :attr:`INPUT_FORMATS` for list of valid input
                              formats
-        b64_data (base64 str): base64 encoded file
+        output_format (str): see :attr:`OUTPUT_FORMATS` for list of valid output
+                             formats
+        b64_data (base64 str): :py:mod:`base64` encoded file
+
+    Raises:
+        ValueError: if invalid input/output format is provided.
     """
     def __init__(self, input_format, output_format, b64_data):
         if input_format not in INPUT_FORMATS:
@@ -87,31 +97,35 @@ class ConversionResponse(namedtuple("ConversionResponse", ["format",
                                                            "b64_data",
                                                            "protocol"])):
     """
+    Structure is returned as response from :func:`reactToAMQPMessage`, when
+    the file is converted.
+
     Args:
         type (str): see OUTPUT_FORMATS for details
-        b64_data (base64 str): base64 encoded converted data
+        b64_data (base64 str): :py:mod:`base64` encoded converted data
         protocol (str): protocol of the conversion
     """
     pass
 
 
 def _instanceof(instance, class_):
-    """Check type by matching .__name__."""
+    """Check type by matching ``.__name__``."""
     type(instance).__name__ == class_.__name__
 
 
 def reactToAMQPMessage(message, UUID):
     """
-    React to given (AMQP) message.
+    React to given (AMQP) message. `message` is usually expected to be
+    :py:func:`collections.namedtuple` structure filled with all necessary data.
 
     Args:
-        message (*Request class): only :class`ConversionRequest` class is
+        message (\*Request class): only :class:`ConversionRequest` class is
                                   supported right now
         UUID (str): unique ID of received message
 
     Returns:
-        ConversionResponse: response to :class:`ConversionRequest` filled with
-                            data.
+        ConversionResponse: response filled with data about conversion and\
+                            converted file.
 
     Raises:
         ValueError: if bad type of `message` structure is given.

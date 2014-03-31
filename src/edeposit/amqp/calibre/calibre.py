@@ -4,6 +4,9 @@
 # Interpreter version: python 2.7
 #
 #= Imports ====================================================================
+"""
+Lowlevel conversion API for calibre's ``ebook-convert``.
+"""
 import os
 from base64 import b64encode, b64decode
 from tempfile import NamedTemporaryFile as NTFile
@@ -18,7 +21,7 @@ from __init__ import INPUT_FORMATS, OUTPUT_FORMATS, ConversionResponse
 #= Functions & objects ========================================================
 def check_ebook_convert():
     """
-    Check, if the 'ebook-convert' program is installed.
+    Check, if the ``ebook-convert`` program is installed.
 
     Raises:
         UserWarning: if not.
@@ -50,10 +53,10 @@ def convert(input_format, output_format, b64_data):
         b64_data (str):      base64 encoded data
 
     Returns:
-        ConversionResponse: namedtuple structure with information about output
-                            ``format``, data (``b64_data``) and protocol from
-                            conversion (``protocol``). Structured is defined
-                            in :class:`__init__.ConversionResponse`.
+        ConversionResponse: namedtuple structure with information about output\
+                            ``format``, data (``b64_data``) and ``protocol``\
+                            from conversion. Structure is defined in \
+                            :class:`.ConversionResponse`.
 
     Raises:
         AssertionError: when bad arguments are handed over
