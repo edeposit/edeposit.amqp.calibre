@@ -1,50 +1,23 @@
 Introduction
 ============
 
-FIXME: Generic project description.
+This module provides wrapper for Calibre, to access it’s conversion functions using AMQP protocol.
 
-.. `Full module documentation <http://edeposit-amqp-calibre.readthedocs.org/en/latest/py-modindex.html>`_ is hosted at the `readthedocs <http://edeposit-amqp-calibre.readthedocs.org>`_.
+Module provides only generic wrapper, not AMQP communication itself - that is handled by Calibredaemon from edeposit.amqp project.
+
+`Full module documentation <http://edeposit-amqp-calibre.readthedocs.org/en/latest/>`_ is hosted at the ReadTheDocs.
 
 Installation
 ------------
 
-.. Module is hosted at `PYPI <http://pypi.python.org>`_, and can be easily installed using `PIP <http://en.wikipedia.org/wiki/Pip_%28package_manager%29>`_:
+Package can be installed using `PIP <http://en.wikipedia.org/wiki/Pip_%28package_manager%29>`_:
 
-.. ::
+::
 
-..     pip install edeposit.amqp.calibre
+   pip install edeposit.amqp.calibre
 
-.. Source codes can be found at `GitHub <https://github.com/>`_: https://github.com/jstavel/edeposit.amqp.aleph.
+Source codes are located at `GitHub <https://github.com/>`_: https://github.com/jstavel/edeposit.amqp.calibre.
 
-Content
--------
-.. Module provides several submodules:
-
-.. edeposit.amqp.aleph.__init__
-.. ++++++++++++++++++++++++++++
-.. Data structures for (generic, not just AMQP) communication. It contains reaction function ``reactToAMQPMessage()``, which detects what (serialized) structure was given to her, do some low-level interactions with Aleph and returns result structures.
-
-.. Module provides also serialize/deserialze functions for generic python ``namedtuple`` structures.
-
-.. edeposit.amqp.aleph.aleph
-.. +++++++++++++++++++++++++
-.. Used for raw communication with Aleph server. Communication is read-only and uses special API provided by Aleph X-Services module.
-
-.. Can be queried using ``reactToAMQPMessage()`` defined in ``__init__``.
-
-.. edeposit.amqp.aleph.marcxml
-.. +++++++++++++++++++++++++++
-.. MARC XML (de)serialization class, which provides some higher-level bindings to MARC records.
-
-.. edeposit.amqp.aleph.convertors
-.. ++++++++++++++++++++++++++++++
-.. Convertors from MARC XML records to Epublication structures defined in ``__init__``.
-
-.. edeposit.amqp.aleph.isbn
-.. ++++++++++++++++++++++++
-.. ISBN checksum validator.
-
-.. Can be queried using ``reactToAMQPMessage()`` defined in ``__init__``.
 
 Acceptance tests
 ----------------
@@ -63,8 +36,8 @@ Or continuously using nosier:
 
     $ nosier -p src -b 'export' "pybot -W 80 --pythonpath src/edeposit/amqp/calibre/tests/ --pythonpath src src/edeposit/amqp/calibre/tests/"
 
-Status of acceptance tests
-++++++++++++++++++++++++++
+.. Status of acceptance tests
+.. ++++++++++++++++++++++++++
 
 .. You can see the results of the tests here:
 
