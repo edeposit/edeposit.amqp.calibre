@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.1
+-----
+    - Fixed bug in packaging system.
+
 1.0.0
 -----
     - Code should be working.
