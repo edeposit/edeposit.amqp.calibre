@@ -12,5 +12,4 @@ data. If you are interested in this way of accessing functuions, please look at:
 
 .. toctree::
 
-   api/edeposit.amqp.calibre.calibre
-   edeposit.amqp.calibre.calibre
+   /api/edeposit.amqp.calibre.calibre
