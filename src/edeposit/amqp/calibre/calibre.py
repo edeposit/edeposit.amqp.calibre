@@ -15,41 +15,19 @@ from tempfile import NamedTemporaryFile as NTFile
 import sh
 
 
-from __init__ import INPUT_FORMATS, OUTPUT_FORMATS, ConversionResponse
+from structures import INPUT_FORMATS, OUTPUT_FORMATS, ConversionResponse
 
 
 #= Functions & objects ========================================================
-def check_ebook_convert():
-    """
-    Check, if the ``ebook-convert`` program is installed.
-
-    Raises:
-        UserWarning: if not.
-    """
-    try:
-        output = sh.ebook_convert(_ok_code=[1])
-    except sh.CommandNotFound:
-        raise UserWarning(
-            "'ebook-convert' not found. Do you have callibre installed?"
-        )
-
-    # check whether the output is really from ebook-convert
-    if "Usage" not in output or "Convert an ebook" not in output:
-        raise UserWarning(
-            "'ebook-convert' reacts strangely. Post this to developers:\n\n" +
-            b64encode(str(output))
-        )
-
-
 def convert(input_format, output_format, b64_data):
     """
     Convert `b64_data` fron `input_format` to `output_format`.
 
     Args:
         input_format (str):  specification of input format (pdf/epub/whatever),
-                             see :attr:`__init__.INPUT_FORMATS` for list
+                             see :attr:`INPUT_FORMATS` for list
         output_format (str): specification of output format (pdf/epub/whatever),
-                             see :attr:`__init__.OUTPUT_FORMATS` for list
+                             see :attr:`OUTPUT_FORMATS` for list
         b64_data (str):      base64 encoded data
 
     Returns:
@@ -76,7 +54,7 @@ def convert(input_format, output_format, b64_data):
         )
 
         # convert file
-        output = sh.ebook_convert(ifile.name, ofilename)
+        output = unicode(sh.ebook_convert(ifile.name, ofilename))
 
         if output_format.upper() + " output written to" not in output:
             raise UserWarning("Conversion failed:\n" + output)
@@ -92,5 +70,5 @@ def convert(input_format, output_format, b64_data):
         return ConversionResponse(
             format=output_format,
             b64_data=b64encode(output_data),
-            protocol=str(output)
+            protocol=output
         )
