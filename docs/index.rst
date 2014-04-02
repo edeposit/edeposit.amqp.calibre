@@ -25,6 +25,8 @@ and can be installed using PIP::
 API
 ---
 
+.. include:: api/edeposit.amqp.calibre.structures.rst
+
 .. include:: api/edeposit.amqp.calibre.rst
 
 
