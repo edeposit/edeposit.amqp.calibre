@@ -8,6 +8,7 @@
 Lowlevel conversion API for calibre's ``ebook-convert``.
 """
 import os
+from textwrap import wrap
 from base64 import b64encode, b64decode
 from tempfile import NamedTemporaryFile as NTFile
 
@@ -52,6 +53,7 @@ def convert(input_format, output_format, b64_data):
         ifile.write(
             b64decode(b64_data)
         )
+        ifile.flush()
 
         # convert file
         output = unicode(sh.ebook_convert(ifile.name, ofilename))
@@ -69,6 +71,6 @@ def convert(input_format, output_format, b64_data):
 
         return ConversionResponse(
             format=output_format,
-            b64_data=b64encode(output_data),
+            b64_data="\n".join(wrap(b64encode(output_data), 80)),
             protocol=output
         )
