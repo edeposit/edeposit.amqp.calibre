@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.1.0
+-----
+    - Fixed bug in calibre.py.
+    - Added tests.
+    - Data structures moved from init to structures.py.
+    - Added documentation for structures.py.
+
 1.0.1
 -----
     - Fixed bug in packaging system.
