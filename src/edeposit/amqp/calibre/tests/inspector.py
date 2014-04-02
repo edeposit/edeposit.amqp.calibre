@@ -4,8 +4,8 @@
 # library for Robot Framework to inspect python modules
 #
 import os.path
-from base64 import b64encode
-from collections import namedtuple
+from base64 import b64encode, b64decode
+from tempfile import NamedTemporaryFile as NTFile
 
 import sh
 
@@ -35,6 +35,14 @@ class Inspector(object):
 
     def to_utf8(self, s):
         return s.decode("utf-8")
+
+    def save_response(self, resp):
+        with NTFile(mode="wb",
+                    suffix="." + resp.format,
+                    dir="/tmp",
+                    delete=False) as ifile:
+            ifile.write(b64decode(resp.b64_data))
+            return ifile.name
 
     def check_ebook_convert_presence(self):
         """
