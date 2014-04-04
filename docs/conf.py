@@ -28,7 +28,7 @@ napoleon_numpy_docstring = False
 napoleon_include_private_with_doc = False
 napoleon_include_special_with_doc = True
 
-# Sorting
+# Sorting of items
 autodoc_member_order = "bysource"
 
 # Document all methods in classes
