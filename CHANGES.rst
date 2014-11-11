@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.1.1
+-----
+    - Fixed bug in unicode handling.
+    - Removed checking, whether the input format is same as output.
+
 1.1.0
 -----
     - Fixed bug in calibre.py.

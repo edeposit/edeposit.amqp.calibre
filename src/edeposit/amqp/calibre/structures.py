@@ -83,9 +83,6 @@ class ConversionRequest(namedtuple("ConversionRequest", ["input_format",
         if output_format not in OUTPUT_FORMATS:
             raise ValueError("Unsupported output format!")
 
-        if input_format == output_format:
-            raise ValueError("Input and output formats are the same.")
-
 
 class ConversionResponse(namedtuple("ConversionResponse", ["format",
                                                            "b64_data",
