@@ -3,7 +3,7 @@
 #
 # Interpreter version: python 2.7
 #
-#= Imports ====================================================================
+# Imports =====================================================================
 """
 Lowlevel conversion API for calibre's ``ebook-convert``.
 """
@@ -19,7 +19,7 @@ import sh
 from structures import INPUT_FORMATS, OUTPUT_FORMATS, ConversionResponse
 
 
-#= Functions & objects ========================================================
+# Functions & objects =========================================================
 def convert(input_format, output_format, b64_data):
     """
     Convert `b64_data` fron `input_format` to `output_format`.
@@ -44,7 +44,6 @@ def convert(input_format, output_format, b64_data):
     # checks
     assert input_format in INPUT_FORMATS, "Unsupported input format!"
     assert output_format in OUTPUT_FORMATS, "Unsupported output format!"
-    assert input_format != output_format, "Input and output formats are same!"
 
     with NTFile(mode="wb", suffix="." + input_format, dir="/tmp") as ifile:
         ofilename = ifile.name + "." + output_format
@@ -56,7 +55,16 @@ def convert(input_format, output_format, b64_data):
         ifile.flush()
 
         # convert file
-        output = unicode(sh.ebook_convert(ifile.name, ofilename))
+        try:
+            output = unicode(
+                sh.ebook_convert(ifile.name, ofilename),
+                errors='ignore'
+            )
+        except sh.ErrorReturnCode_1, e:
+            raise UserWarning(
+                "Conversion failed:\n" +
+                e.message.encode("utf-8", errors='ignore')
+            )
 
         if output_format.upper() + " output written to" not in output:
             raise UserWarning("Conversion failed:\n" + output)
