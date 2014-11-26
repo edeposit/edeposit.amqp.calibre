@@ -57,7 +57,7 @@ def convert(input_format, output_format, b64_data):
         # convert file
         try:
             output = unicode(
-                sh.ebook_convert(ifile.name, ofilename),
+                sh.ebook_convert(ifile.name, ofilename).__str__(),
                 errors='ignore'
             )
         except sh.ErrorReturnCode_1, e:
