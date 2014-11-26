@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.2
+-----
+    - Fixed unicode bug at older python systems.
+
 1.1.1
 -----
     - Fixed bug in unicode handling.
