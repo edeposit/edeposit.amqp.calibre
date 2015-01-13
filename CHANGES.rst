@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.1.3
+-----
+    - Fixed another unicode bug.
+    - Added own text wrapping function, textwrap.wrap() was absurdly slow.
+
 1.1.2
 -----
     - Fixed unicode bug at older python systems.
