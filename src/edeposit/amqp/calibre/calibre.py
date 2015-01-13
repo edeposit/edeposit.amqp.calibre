@@ -8,7 +8,6 @@
 Lowlevel conversion API for calibre's ``ebook-convert``.
 """
 import os
-from textwrap import wrap
 from base64 import b64encode, b64decode
 from tempfile import NamedTemporaryFile as NTFile
 
@@ -20,6 +19,31 @@ from structures import INPUT_FORMATS, OUTPUT_FORMATS, ConversionResponse
 
 
 # Functions & objects =========================================================
+def _wrap(text, columns=80):
+    """
+    Own "dumb" reimplementation of textwrap.wrap().
+
+    This is because calling .wrap() on bigger strings can take a LOT of
+    processor power. And I mean like 8 seconds of 3GHz CPU just to wrap 20kB of
+    text without spaces.
+
+    Args:
+        text (str): Text to wrap.
+        columns (int): Wrap after `columns` characters.
+
+    Returns:
+        str: Wrapped text.
+    """
+    out = []
+    for cnt, char in enumerate(text):
+        out.append(char)
+
+        if (cnt + 1) % columns == 0:
+            out.append("\n")
+
+    return "".join(out)
+
+
 def convert(input_format, output_format, b64_data):
     """
     Convert `b64_data` fron `input_format` to `output_format`.
@@ -81,6 +105,6 @@ def convert(input_format, output_format, b64_data):
 
         return ConversionResponse(
             format=output_format,
-            b64_data="\n".join(wrap(b64encode(output_data), 80)),
+            b64_data=_wrap(b64encode(output_data)),
             protocol=output
         )
