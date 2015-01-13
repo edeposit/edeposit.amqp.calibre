@@ -56,10 +56,12 @@ def convert(input_format, output_format, b64_data):
 
         # convert file
         try:
-            output = unicode(
-                sh.ebook_convert(ifile.name, ofilename).__str__(),
-                errors='ignore'
-            )
+            output = ""
+            with NTFile(mode="wb", suffix = ".stdout", dir="/tmp") as stdout:
+                sh.ebook_convert(ifile.name, ofilename, _out=stdout).wait()
+                stdout.flush()
+                output = open(stdout.name).read()
+                stdout.close()
         except sh.ErrorReturnCode_1, e:
             raise UserWarning(
                 "Conversion failed:\n" +
