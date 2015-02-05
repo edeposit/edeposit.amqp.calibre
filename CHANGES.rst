@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.4
+-----
+    - ``reactToAMQPMessage()`` parameters modified.
+
 1.1.3
 -----
     - Fixed another unicode bug.
