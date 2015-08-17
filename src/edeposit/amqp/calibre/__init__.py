@@ -3,13 +3,14 @@
 #
 # Interpreter version: python 2.7
 #
-# Imports =====================================================================
 """
 AMQP communication wrapper for calibre's ``ebook-convert`` program.
 """
+# Imports =====================================================================
 from calibre import convert
 
-from structures import *
+from structures import ConversionRequest
+from structures import ConversionResponse
 
 
 # Functions ===================================================================
