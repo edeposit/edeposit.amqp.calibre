@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.2.0
+-----
+    - PEP8 aplied.
+    - Memory footprint slightly improved.
+
 1.1.4
 -----
     - ``reactToAMQPMessage()`` parameters modified.

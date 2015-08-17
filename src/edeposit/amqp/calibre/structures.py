@@ -3,11 +3,11 @@
 #
 # Interpreter version: python 2.7
 #
-#= Imports ====================================================================
+# Imports =====================================================================
 from collections import namedtuple
 
 
-#= Variables ==================================================================
+# Variables ===================================================================
 INPUT_FORMATS = [
     "cbz",
     "cbr",
@@ -58,7 +58,7 @@ OUTPUT_FORMATS = [  #:
 "List of `available output <http://bit.ly/1c1bHZP>`_ formats."
 
 
-#= Functions & objects ========================================================
+# Functions & objects =========================================================
 class ConversionRequest(namedtuple("ConversionRequest", ["input_format",
                                                          "output_format",
                                                          "b64_data"])):
@@ -67,11 +67,11 @@ class ConversionRequest(namedtuple("ConversionRequest", ["input_format",
     :func:`reactToAMQPMessage` as request for conversion.
 
     Args:
-        input_format (str):  see :attr:`INPUT_FORMATS` for list of valid input
-                             formats
-        output_format (str): see :attr:`OUTPUT_FORMATS` for list of valid output
-                             formats
-        b64_data (base64 str): :py:mod:`base64` encoded file
+        input_format (str):  See :attr:`INPUT_FORMATS` for list of valid input
+                     formats
+        output_format (str): See :attr:`OUTPUT_FORMATS` for list of valid
+                      output formats.
+        b64_data (base64 str): :py:mod:`base64` encoded file.
 
     Raises:
         ValueError: if invalid input/output format is provided.
@@ -92,8 +92,7 @@ class ConversionResponse(namedtuple("ConversionResponse", ["format",
     the file is converted.
 
     Args:
-        type (str): see :attr:`OUTPUT_FORMATS` for details
-        b64_data (base64 str): :py:mod:`base64` encoded converted data
-        protocol (str): protocol of the conversion
+        type (str): See :attr:`OUTPUT_FORMATS` for details.
+        b64_data (base64 str): :py:mod:`base64` encoded converted data.
+        protocol (str): Protocol of the conversion.
     """
-    pass
