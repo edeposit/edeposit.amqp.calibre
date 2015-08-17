@@ -3,7 +3,7 @@
 #
 # Interpreter version: python 2.7
 #
-#= Imports ====================================================================
+# Imports =====================================================================
 """
 AMQP communication wrapper for calibre's ``ebook-convert`` program.
 """
@@ -12,6 +12,7 @@ from calibre import convert
 from structures import *
 
 
+# Functions ===================================================================
 def _instanceof(instance, class_):
     """Check type by matching ``.__name__``."""
     return type(instance).__name__ == class_.__name__
